@@ -4,12 +4,12 @@ plugins {
 
 android {
     namespace 'nep.timeline.fuck_shown'
-    compileSdk 35
+    compileSdk 37
 
     defaultConfig {
         applicationId "nep.timeline.fuck_shown"
         minSdk 28
-        targetSdk 35
+        targetSdk 37
         versionCode 1
         versionName "Mystery"
 
