@@ -1,5 +1,7 @@
 package nep.timeline.fuck_shown;
 
+import android.os.Build;
+
 import java.lang.reflect.Method;
 
 import de.robv.android.xposed.IXposedHookLoadPackage;
@@ -48,6 +50,15 @@ public class HookInit implements IXposedHookLoadPackage {
                 });
             } catch (NoSuchMethodException e) {
                 XposedBridge.log("[Fuck-Shown] Your device is ColorOS!");
+                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.BAKLAVA) {
+                    XposedHelpers.findAndHookMethod("com.oplus.systemui.statusbar.notification.OplusNotificationIconStatusBarHelperImpl", classLoader, "oplusShouldShowIcon", "com.android.systemui.statusbar.notification.collection.NotificationEntry", new XC_MethodHook() {
+                        @Override
+                        protected void beforeHookedMethod(MethodHookParam param) {
+                            param.setResult(true);
+                        }
+                    });
+                }
+
                 XposedHelpers.findAndHookMethod(clazz, "shouldHideNotification", "com.android.systemui.statusbar.notification.collection.NotificationEntry", new XC_MethodHook() {
                     @Override
                     protected void beforeHookedMethod(MethodHookParam param) {
